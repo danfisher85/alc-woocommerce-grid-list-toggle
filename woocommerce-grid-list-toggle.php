@@ -79,22 +79,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			// Setup
 			function setup_gridlist() {
 				if ( is_shop() || is_product_category() || is_product_tag() || is_product_taxonomy() ) {
-					add_action( 'wp_enqueue_scripts', array( $this, 'setup_scripts_styles' ), 20);
 					add_action( 'wp_enqueue_scripts', array( $this, 'setup_scripts_script' ), 20);
-					add_action( 'woocommerce_before_shop_loop', array( $this, 'gridlist_toggle_button' ), 30);
-					add_action( 'woocommerce_after_shop_loop_item', array( $this, 'gridlist_buttonwrap_open' ), 9);
-					add_action( 'woocommerce_after_shop_loop_item', array( $this, 'gridlist_buttonwrap_close' ), 11);
-					add_action( 'woocommerce_after_shop_loop_item', array( $this, 'gridlist_hr' ), 30);
-					add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_single_excerpt', 5);
+					add_action( 'woocommerce_before_shop_loop', array( $this, 'gridlist_toggle_button' ), 40);
 					add_action( 'woocommerce_after_subcategory', array( $this, 'gridlist_cat_desc' ) );
 				}
-			}
-
-			// Scripts & styles
-			function setup_scripts_styles() {
-				wp_enqueue_style( 'grid-list-layout', plugins_url( '/assets/css/style.css', __FILE__ ) );
-				wp_enqueue_style( 'grid-list-button', plugins_url( '/assets/css/button.css', __FILE__ ) );
-				wp_enqueue_style( 'dashicons' );
 			}
 
 			function setup_scripts_script() {
@@ -109,22 +97,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				$grid_view = __( 'Grid view', 'woocommerce-grid-list-toggle' );
 				$list_view = __( 'List view', 'woocommerce-grid-list-toggle' );
 
-				$output = sprintf( '<nav class="gridlist-toggle"><a href="#" id="grid" title="%1$s"><span class="dashicons dashicons-grid-view"></span> <em>%1$s</em></a><a href="#" id="list" title="%2$s"><span class="dashicons dashicons-exerpt-view"></span> <em>%2$s</em></a></nav>', $grid_view, $list_view );
+				$output = sprintf( '<nav class="shop-filter__layout"><a href="#" id="grid" title="%1$s" class="shop-filter__grid-layout icon-grid-layout"><span class="icon-grid-layout__inner"><span class="icon-grid-layout__item"></span><span class="icon-grid-layout__item"></span><span class="icon-grid-layout__item"></span></span></a><a href="#" id="list" title="%2$s" class="shop-filter__list-layout icon-list-layout"><span class="icon-list-layout__inner"><span class="icon-list-layout__item"></span><span class="icon-list-layout__item"></span><span class="icon-list-layout__item"></span></span></a></nav>', $grid_view, $list_view );
 
 				echo apply_filters( 'gridlist_toggle_button_output', $output, $grid_view, $list_view );
-			}
-
-			// Button wrap
-			function gridlist_buttonwrap_open() {
-				echo apply_filters( 'gridlist_button_wrap_start', '<div class="gridlist-buttonwrap">' );
-			}
-			function gridlist_buttonwrap_close() {
-				echo apply_filters( 'gridlist_button_wrap_end', '</div>' );
-			}
-
-			// hr
-			function gridlist_hr() {
-				echo apply_filters( 'gridlist_hr', '<hr />' );
 			}
 
 			function gridlist_set_default_view() {

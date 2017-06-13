@@ -2,7 +2,7 @@
 
 jQuery(document).ready(function(){
 
-    jQuery('#grid').click(function() {
+  jQuery('#grid').click(function() {
 		jQuery(this).addClass('active');
 		jQuery('#list').removeClass('active');
 		jQuery.cookie('gridcookie','grid', { path: '/' });
@@ -13,6 +13,7 @@ jQuery(document).ready(function(){
 	});
 
 	jQuery('#list').click(function() {
+
 		jQuery(this).addClass('active');
 		jQuery('#grid').removeClass('active');
 		jQuery.cookie('gridcookie','list', { path: '/' });
@@ -23,18 +24,18 @@ jQuery(document).ready(function(){
 	});
 
 	if (jQuery.cookie('gridcookie')) {
-        jQuery('ul.products, #gridlist-toggle').addClass(jQuery.cookie('gridcookie'));
-    }
+    jQuery('ul.products, #gridlist-toggle').addClass(jQuery.cookie('gridcookie'));
+  }
 
-    if (jQuery.cookie('gridcookie') == 'grid') {
-        jQuery('.gridlist-toggle #grid').addClass('active');
-        jQuery('.gridlist-toggle #list').removeClass('active');
-    }
+  if (jQuery.cookie('gridcookie') == 'grid') {
+    jQuery('.gridlist-toggle #grid').addClass('active');
+    jQuery('.gridlist-toggle #list').removeClass('active');
+  }
 
-    if (jQuery.cookie('gridcookie') == 'list') {
-        jQuery('.gridlist-toggle #list').addClass('active');
-        jQuery('.gridlist-toggle #grid').removeClass('active');
-    }
+  if (jQuery.cookie('gridcookie') == 'list') {
+    jQuery('.gridlist-toggle #list').addClass('active');
+    jQuery('.gridlist-toggle #grid').removeClass('active');
+  }
 
 	jQuery('#gridlist-toggle a').click(function(event) {
 	    event.preventDefault();
