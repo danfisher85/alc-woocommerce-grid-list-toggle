@@ -52,11 +52,32 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 							'list' 	=> __( 'List', 'woocommerce-grid-list-toggle' )
 						)
 					),
+					array(
+						'name' 		=> __( 'Number of columns', 'woocommerce-grid-list-toggle' ),
+						'desc_tip' 	=> __( 'Number of grid columns. Note: applied for grid view only', 'woocommerce-grid-list-toggle' ),
+						'id' 		=> 'wc_glt_cols',
+						'type' 		=> 'select',
+						'options' 	=> array(
+							'2'  => __( '2 columns', 'woocommerce-grid-list-toggle' ),
+							'3' 	=> __( '3 columns', 'woocommerce-grid-list-toggle' ),
+							'4' 	=> __( '4 columns', 'woocommerce-grid-list-toggle' ),
+						),
+						'default' => '3',
+					),
+					array(
+						'name' 		=> __( 'Products per page', 'woocommerce-grid-list-toggle' ),
+						'desc_tip' 	=> __( 'Number of products on Shop page.', 'woocommerce-grid-list-toggle' ),
+						'id' 		=> 'wc_glt_count',
+						'type' 		=> 'text',
+						'default' => '6,12,24'
+					),
 					array( 'type' => 'sectionend', 'id' => 'wc_glt_options' ),
 				);
 
 				// Default options
 				add_option( 'wc_glt_default', 'grid' );
+				add_option( 'wc_glt_cols', '3' );
+				add_option( 'wc_glt_count', '6,12,24' );
 
 				// Admin
 				add_action( 'woocommerce_settings_image_options_after', array( $this, 'admin_settings' ), 20 );
@@ -89,6 +110,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				wp_enqueue_script( 'cookie', plugins_url( '/assets/js/jquery.cookie.min.js', __FILE__ ), array( 'jquery' ) );
 				wp_enqueue_script( 'grid-list-scripts', plugins_url( '/assets/js/jquery.gridlistview.min.js', __FILE__ ), array( 'jquery' ) );
 				add_action( 'wp_footer', array( $this, 'gridlist_set_default_view' ) );
+				add_action( 'wp_footer', array( $this, 'gridlist_set_default_cols' ) );
 			}
 
 			// Toggle button
@@ -110,6 +132,21 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					    	jQuery( 'ul.products' ).addClass( '<?php echo $default; ?>' );
 					    	jQuery( '.gridlist-toggle #<?php echo $default; ?>' ).addClass( 'active' );
 					    }
+					</script>
+				<?php
+			}
+
+			function gridlist_set_default_cols() {
+				$cols = get_option( 'wc_glt_cols' );
+				?>
+					<script>
+						(function($){
+		  		    $(document).on('ready', function() {
+								if ($.cookie( 'gridcookie' ) == null || $('ul.products').hasClass('grid') ) {
+						    	$( 'ul.products' ).addClass( 'products--grid-<?php echo $cols; ?>' );
+						    }
+		  		    });
+		  		  })(jQuery);
 					</script>
 				<?php
 			}
