@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Grid / List toggle
 Plugin URI: http://jameskoster.co.uk/tag/grid-list-toggle/
 Description: Adds a grid/list view toggle to product archives
-Version: 1.1.0
+Version: 1.1.1
 Author: jameskoster
 Author URI: http://jameskoster.co.uk
 Requires at least: 4.0
@@ -33,9 +33,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 			public function __construct() {
 				// Hooks
-  				add_action( 'wp' , array( $this, 'setup_gridlist' ) , 20);
+				add_action( 'wp' , array( $this, 'setup_gridlist' ) , 20);
 
-  				// Init settings
+				// Init settings
 				$this->settings = array(
 					array(
 						'name' 	=> __( 'Default catalog view', 'woocommerce-grid-list-toggle' ),
@@ -80,7 +80,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_option( 'wc_glt_count', '6,12,24' );
 
 				// Admin
-				add_action( 'woocommerce_settings_image_options_after', array( $this, 'admin_settings' ), 20 );
+				add_action( 'woocommerce_settings_product_rating_options_after', array( $this, 'admin_settings' ), 20 );
 				add_action( 'woocommerce_update_options_catalog', array( $this, 'save_admin_settings' ) );
 				add_action( 'woocommerce_update_options_products', array( $this, 'save_admin_settings' ) );
 			}
@@ -129,9 +129,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				?>
 					<script>
 						if (jQuery.cookie( 'gridcookie' ) == null) {
-					    	jQuery( 'ul.products' ).addClass( '<?php echo $default; ?>' );
-					    	jQuery( '.gridlist-toggle #<?php echo $default; ?>' ).addClass( 'active' );
-					    }
+							jQuery( 'ul.products' ).addClass( '<?php echo $default; ?>' );
+							jQuery( '.gridlist-toggle #<?php echo $default; ?>' ).addClass( 'active' );
+						}
 					</script>
 				<?php
 			}
@@ -141,12 +141,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				?>
 					<script>
 						(function($){
-		  		    $(document).on('ready', function() {
+							$(document).on('ready', function() {
 								if ($.cookie( 'gridcookie' ) == null || $('ul.products').hasClass('grid') ) {
-						    	$( 'ul.products' ).addClass( 'products--grid-<?php echo $cols; ?>' );
-						    }
-		  		    });
-		  		  })(jQuery);
+									$( 'ul.products' ).addClass( 'products--grid-<?php echo $cols; ?>' );
+								}
+							});
+						})(jQuery);
 					</script>
 				<?php
 			}
