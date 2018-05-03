@@ -1,16 +1,16 @@
 <?php
 /*
-Plugin Name: WooCommerce Grid / List toggle
-Plugin URI: http://jameskoster.co.uk/tag/grid-list-toggle/
+Plugin Name: Alchemists WooCommerce Grid / List toggle
+Plugin URI: https://github.com/danfisher85/alchemists-woocommerce-grid-list-toggle
 Description: Adds a grid/list view toggle to product archives
-Version: 1.1.1
-Author: jameskoster
-Author URI: http://jameskoster.co.uk
+Version: 1.1.2
+Author: Dan Fisher
+Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.0
-Tested up to: 4.7
+Tested up to: 4.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: woocommerce-grid-list-toggle
+Text Domain: alchemists-woocommerce-grid-list-toggle
 Domain Path: /languages/
 */
 
@@ -22,7 +22,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	/**
 	 * Localisation
 	 **/
-	load_plugin_textdomain( 'woocommerce-grid-list-toggle', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'alchemists-woocommerce-grid-list-toggle', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	/**
 	 * WC_List_Grid class
@@ -38,35 +38,35 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				// Init settings
 				$this->settings = array(
 					array(
-						'name' 	=> __( 'Default catalog view', 'woocommerce-grid-list-toggle' ),
+						'name' 	=> __( 'Default catalog view', 'alchemists-woocommerce-grid-list-toggle' ),
 						'type' 	=> 'title',
 						'id' 	=> 'wc_glt_options'
 					),
 					array(
-						'name' 		=> __( 'Default catalog view', 'woocommerce-grid-list-toggle' ),
-						'desc_tip' 	=> __( 'Display products in grid or list view by default', 'woocommerce-grid-list-toggle' ),
+						'name' 		=> __( 'Default catalog view', 'alchemists-woocommerce-grid-list-toggle' ),
+						'desc_tip' 	=> __( 'Display products in grid or list view by default', 'alchemists-woocommerce-grid-list-toggle' ),
 						'id' 		=> 'wc_glt_default',
 						'type' 		=> 'select',
 						'options' 	=> array(
-							'grid'  => __( 'Grid', 'woocommerce-grid-list-toggle' ),
-							'list' 	=> __( 'List', 'woocommerce-grid-list-toggle' )
+							'grid'  => __( 'Grid', 'alchemists-woocommerce-grid-list-toggle' ),
+							'list' 	=> __( 'List', 'alchemists-woocommerce-grid-list-toggle' )
 						)
 					),
 					array(
-						'name' 		=> __( 'Number of columns', 'woocommerce-grid-list-toggle' ),
-						'desc_tip' 	=> __( 'Number of grid columns. Note: applied for grid view only', 'woocommerce-grid-list-toggle' ),
+						'name' 		=> __( 'Number of columns', 'alchemists-woocommerce-grid-list-toggle' ),
+						'desc_tip' 	=> __( 'Number of grid columns. Note: applied for grid view only', 'alchemists-woocommerce-grid-list-toggle' ),
 						'id' 		=> 'wc_glt_cols',
 						'type' 		=> 'select',
 						'options' 	=> array(
-							'2'  => __( '2 columns', 'woocommerce-grid-list-toggle' ),
-							'3' 	=> __( '3 columns', 'woocommerce-grid-list-toggle' ),
-							'4' 	=> __( '4 columns', 'woocommerce-grid-list-toggle' ),
+							'2'  => __( '2 columns', 'alchemists-woocommerce-grid-list-toggle' ),
+							'3' 	=> __( '3 columns', 'alchemists-woocommerce-grid-list-toggle' ),
+							'4' 	=> __( '4 columns', 'alchemists-woocommerce-grid-list-toggle' ),
 						),
 						'default' => '3',
 					),
 					array(
-						'name' 		=> __( 'Products per page', 'woocommerce-grid-list-toggle' ),
-						'desc_tip' 	=> __( 'Number of products on Shop page.', 'woocommerce-grid-list-toggle' ),
+						'name' 		=> __( 'Products per page', 'alchemists-woocommerce-grid-list-toggle' ),
+						'desc_tip' 	=> __( 'Number of products on Shop page.', 'alchemists-woocommerce-grid-list-toggle' ),
 						'id' 		=> 'wc_glt_count',
 						'type' 		=> 'text',
 						'default' => '6,12,24'
@@ -116,8 +116,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			// Toggle button
 			function gridlist_toggle_button() {
 
-				$grid_view = __( 'Grid view', 'woocommerce-grid-list-toggle' );
-				$list_view = __( 'List view', 'woocommerce-grid-list-toggle' );
+				$grid_view = __( 'Grid view', 'alchemists-woocommerce-grid-list-toggle' );
+				$list_view = __( 'List view', 'alchemists-woocommerce-grid-list-toggle' );
 
 				$output = sprintf( '<nav class="shop-filter__layout"><a href="#" id="grid" title="%1$s" class="shop-filter__grid-layout icon-grid-layout"><span class="icon-grid-layout__inner"><span class="icon-grid-layout__item"></span><span class="icon-grid-layout__item"></span><span class="icon-grid-layout__item"></span></span></a><a href="#" id="list" title="%2$s" class="shop-filter__list-layout icon-list-layout"><span class="icon-list-layout__inner"><span class="icon-list-layout__item"></span><span class="icon-list-layout__item"></span><span class="icon-list-layout__item"></span></span></a></nav>', $grid_view, $list_view );
 
