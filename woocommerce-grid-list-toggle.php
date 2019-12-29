@@ -3,7 +3,7 @@
 Plugin Name: Alchemists WooCommerce Grid / List toggle
 Plugin URI: https://github.com/danfisher85/alc-woocommerce-grid-list-toggle
 Description: Adds a grid/list view toggle to product archives
-Version: 1.1.2
+Version: 1.1.3
 Author: Dan Fisher
 Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.0
@@ -142,8 +142,29 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					<script>
 						(function($){
 							$(document).on('ready', function() {
-								if ($.cookie( 'gridcookie' ) == null || $('ul.products').hasClass('grid') ) {
-									$( 'ul.products' ).addClass( 'products--grid-<?php echo $cols; ?>' );
+
+								var getUrlParameter = function getUrlParameter(sParam) {
+									var sPageURL = window.location.search.substring(1),
+										sURLVariables = sPageURL.split('&'),
+										sParameterName,
+										i;
+
+									for (i = 0; i < sURLVariables.length; i++) {
+										sParameterName = sURLVariables[i].split('=');
+
+										if (sParameterName[0] === sParam) {
+											return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+										}
+									}
+								};
+
+								var layout = getUrlParameter('layout');
+								if ( layout == 'fullwidth' ) {
+									$( 'ul.products' ).addClass( 'products--grid-4' );
+								} else {
+									if ($.cookie( 'gridcookie' ) == null || $('ul.products').hasClass('grid') ) {
+										$( 'ul.products' ).addClass( 'products--grid-<?php echo $cols; ?>' );
+									}
 								}
 							});
 						})(jQuery);
