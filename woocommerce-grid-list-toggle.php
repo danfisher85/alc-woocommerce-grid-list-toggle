@@ -8,6 +8,8 @@ Author: Dan Fisher
 Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.0
 Tested up to: 4.9.5
+WC requires at least: 3.4
+WC tested up to: 3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: alc-woocommerce-grid-list-toggle
