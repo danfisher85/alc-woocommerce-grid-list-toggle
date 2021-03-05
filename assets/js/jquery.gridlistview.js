@@ -1,44 +1,45 @@
 // The toggle
+(function($){
 
-jQuery(document).ready(function(){
-
-  jQuery('#grid').click(function() {
-		jQuery(this).addClass('active');
-		jQuery('#list').removeClass('active');
-		jQuery.cookie('gridcookie','grid', { path: '/' });
-		jQuery('ul.products').fadeOut(300, function() {
-			jQuery(this).addClass('grid').removeClass('list').fadeIn(300);
+	$(function(){
+		$('#grid').on('click', function() {
+			$(this).addClass('active');
+			$('#list').removeClass('active');
+			$.cookie('gridcookie','grid', { path: '/' });
+			$('ul.products').fadeOut(300, function() {
+				$(this).addClass('grid').removeClass('list').fadeIn(300);
+			});
+			return false;
 		});
-		return false;
-	});
-
-	jQuery('#list').click(function() {
-
-		jQuery(this).addClass('active');
-		jQuery('#grid').removeClass('active');
-		jQuery.cookie('gridcookie','list', { path: '/' });
-		jQuery('ul.products').fadeOut(300, function() {
-			jQuery(this).removeClass('grid').addClass('list').fadeIn(300);
+	
+		$('#list').on('click', function() {
+	
+			$(this).addClass('active');
+			$('#grid').removeClass('active');
+			$.cookie('gridcookie','list', { path: '/' });
+			$('ul.products').fadeOut(300, function() {
+				$(this).removeClass('grid').addClass('list').fadeIn(300);
+			});
+			return false;
 		});
-		return false;
+	
+		if ($.cookie('gridcookie')) {
+			$('ul.products, #gridlist-toggle').addClass($.cookie('gridcookie'));
+		}
+	
+		if ($.cookie('gridcookie') == 'grid') {
+			$('.gridlist-toggle #grid').addClass('active');
+			$('.gridlist-toggle #list').removeClass('active');
+		}
+	
+		if ($.cookie('gridcookie') == 'list') {
+			$('.gridlist-toggle #list').addClass('active');
+			$('.gridlist-toggle #grid').removeClass('active');
+		}
+	
+		$('#gridlist-toggle a').on('click', function(event) {
+			event.preventDefault();
+		});
 	});
 
-	if (jQuery.cookie('gridcookie')) {
-    jQuery('ul.products, #gridlist-toggle').addClass(jQuery.cookie('gridcookie'));
-  }
-
-  if (jQuery.cookie('gridcookie') == 'grid') {
-    jQuery('.gridlist-toggle #grid').addClass('active');
-    jQuery('.gridlist-toggle #list').removeClass('active');
-  }
-
-  if (jQuery.cookie('gridcookie') == 'list') {
-    jQuery('.gridlist-toggle #list').addClass('active');
-    jQuery('.gridlist-toggle #grid').removeClass('active');
-  }
-
-	jQuery('#gridlist-toggle a').click(function(event) {
-	    event.preventDefault();
-	});
-
-});​
+})(jQuery);​
