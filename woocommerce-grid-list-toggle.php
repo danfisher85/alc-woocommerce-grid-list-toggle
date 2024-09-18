@@ -3,7 +3,7 @@
 Plugin Name: Alchemists WooCommerce Grid / List toggle
 Plugin URI: https://github.com/danfisher85/alc-woocommerce-grid-list-toggle
 Description: Adds a grid/list view toggle to product archives
-Version: 1.1.5
+Version: 1.1.6
 Author: Dan Fisher
 Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.7
@@ -36,6 +36,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			public function __construct() {
 				// Hooks
 				add_action( 'wp' , array( $this, 'setup_gridlist' ) , 20);
+				add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility_with_custom_order_tables' ) );
 
 				// Init settings
 				$this->settings = array(
@@ -97,6 +98,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 			function save_admin_settings() {
 				woocommerce_update_options( $this->settings );
+			}
+
+			// Declare compatibility with Custom Order Tables
+			function declare_compatibility_with_custom_order_tables() {
+				if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+				}
 			}
 
 			// Setup
