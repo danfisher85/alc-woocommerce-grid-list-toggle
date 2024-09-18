@@ -7,9 +7,9 @@ Version: 1.1.6
 Author: Dan Fisher
 Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.7
-Tested up to: 5.6.2
+Tested up to: 6.6
 WC requires at least: 4.4
-WC tested up to: 5.0.0
+WC tested up to: 9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: alc-woocommerce-grid-list-toggle
@@ -32,6 +32,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	if ( ! class_exists( 'WC_List_Grid' ) ) {
 
 		class WC_List_Grid {
+
+			// Declare the settings property
+			private $settings;
 
 			public function __construct() {
 				// Hooks
