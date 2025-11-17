@@ -3,13 +3,13 @@
 Plugin Name: Alchemists WooCommerce Grid / List toggle
 Plugin URI: https://github.com/danfisher85/alc-woocommerce-grid-list-toggle
 Description: Adds a grid/list view toggle to product archives
-Version: 1.1.6
+Version: 1.1.7
 Author: Dan Fisher
 Author URI: https://themeforest.net/user/dan_fisher
 Requires at least: 4.7
-Tested up to: 6.6
+Tested up to: 6.8
 WC requires at least: 4.4
-WC tested up to: 9.3
+WC tested up to: 10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: alc-woocommerce-grid-list-toggle
@@ -20,11 +20,6 @@ Domain Path: /languages/
  * Check if WooCommerce is active
  **/
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-
-	/**
-	 * Localisation
-	 **/
-	load_plugin_textdomain( 'alc-woocommerce-grid-list-toggle', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	/**
 	 * WC_List_Grid class
@@ -38,10 +33,33 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 			public function __construct() {
 				// Hooks
+				add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+				add_action( 'init', array( $this, 'init_settings' ) );
 				add_action( 'wp' , array( $this, 'setup_gridlist' ) , 20);
 				add_action( 'before_woocommerce_init', array( $this, 'declare_compatibility_with_custom_order_tables' ) );
 
-				// Init settings
+				// Default options
+				add_option( 'wc_glt_default', 'grid' );
+				add_option( 'wc_glt_cols', '3' );
+				add_option( 'wc_glt_count', '6,12,24' );
+
+				// Admin
+				add_action( 'woocommerce_settings_product_rating_options_after', array( $this, 'admin_settings' ), 20 );
+				add_action( 'woocommerce_update_options_catalog', array( $this, 'save_admin_settings' ) );
+				add_action( 'woocommerce_update_options_products', array( $this, 'save_admin_settings' ) );
+			}
+
+			/*-----------------------------------------------------------------------------------*/
+			/* Class Functions */
+			/*-----------------------------------------------------------------------------------*/
+
+			// Load plugin textdomain
+			function load_plugin_textdomain() {
+				load_plugin_textdomain( 'alc-woocommerce-grid-list-toggle', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			}
+
+			// Initialize settings
+			function init_settings() {
 				$this->settings = array(
 					array(
 						'name' 	=> esc_html__( 'Default catalog view', 'alc-woocommerce-grid-list-toggle' ),
@@ -79,21 +97,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					),
 					array( 'type' => 'sectionend', 'id' => 'wc_glt_options' ),
 				);
-
-				// Default options
-				add_option( 'wc_glt_default', 'grid' );
-				add_option( 'wc_glt_cols', '3' );
-				add_option( 'wc_glt_count', '6,12,24' );
-
-				// Admin
-				add_action( 'woocommerce_settings_product_rating_options_after', array( $this, 'admin_settings' ), 20 );
-				add_action( 'woocommerce_update_options_catalog', array( $this, 'save_admin_settings' ) );
-				add_action( 'woocommerce_update_options_products', array( $this, 'save_admin_settings' ) );
 			}
-
-			/*-----------------------------------------------------------------------------------*/
-			/* Class Functions */
-			/*-----------------------------------------------------------------------------------*/
 
 			function admin_settings() {
 				woocommerce_admin_fields( $this->settings );
